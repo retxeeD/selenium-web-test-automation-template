@@ -1,7 +1,7 @@
-package br.com.frame.funcionalidades;
+package br.com.poc.funcionalidades;
 
-import br.com.frame.pages.RegisterUserPage;
-import br.com.frame.util.BaseTest;
+import br.com.poc.pages.RegisterUserPage;
+import br.com.poc.util.BaseTest;
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 

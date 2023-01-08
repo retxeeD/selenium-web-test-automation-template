@@ -1,14 +1,14 @@
-package br.com.frame.steps;
+package br.com.poc.steps;
 
-import br.com.frame.util.BaseTest;
-import br.com.frame.util.communs.Web;
-import br.com.frame.util.reports.GeradorWordSteps;
-import br.com.frame.util.reports.ReportVariables;
-import br.com.frame.util.reports.Screenshot;
-import br.com.frame.util.reports.VideoRecord;
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
+import br.com.poc.util.BaseTest;
+import br.com.poc.util.communs.Web;
+import br.com.poc.util.reports.GeradorWordSteps;
+import br.com.poc.util.reports.ReportVariables;
+import br.com.poc.util.reports.Screenshot;
+import br.com.poc.util.reports.VideoRecord;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 
 public class Hooks extends BaseTest {
@@ -31,7 +31,7 @@ public class Hooks extends BaseTest {
 
     @After()
     public void afterScenario(Scenario scenario) throws Exception {
-        ReportVariables.setStatus(scenario.getStatus());
+        ReportVariables.setStatus(scenario.getStatus().toString());
         GeradorWordSteps geradorWordSteps = new GeradorWordSteps();
         videoRecord.stopRecording();
         screenshot.takeScreenShoot();

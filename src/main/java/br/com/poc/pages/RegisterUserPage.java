@@ -1,4 +1,4 @@
-package br.com.frame.pages;
+package br.com.poc.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

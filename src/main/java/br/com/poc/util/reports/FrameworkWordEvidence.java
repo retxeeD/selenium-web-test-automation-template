@@ -1,4 +1,4 @@
-package br.com.frame.util.reports;
+package br.com.poc.util.reports;
 
 import org.docx4j.dml.wordprocessingDrawing.Inline;
 import org.docx4j.jaxb.Context;
@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrameworkWordEvidence {
+
+    /* Add logic to valid if the screeshot exists and delete the screenShot before de execution of the test*/
+
     public WordprocessingMLPackage getTemplate(String name) throws Docx4JException, FileNotFoundException {
         WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(new File(name)));
         return template;
@@ -109,19 +112,18 @@ public class FrameworkWordEvidence {
             throws Exception {
         if (ReportVariables.getValor_esperado() != null) {
             addText(template, "Valores Esperados :");
-            addText(template, ReportVariables.getValor_esperado());
+            addText(template, ReportVariables.getValores_esperados());
             addText(template, "");
         }
         if (ReportVariables.getActual_result() != null) {
             addText(template, "Valores Encontrados :");
             addText(template, ReportVariables.getActual_result());
         }
-        File folder = new File("evidence/word/screenshot/");
+        File folder = new File("evidence/screenshot/");
         File[] screenshots = folder.listFiles();
-        for (File file : screenshots) {
-            if (file.isFile()) {
-                addImage(template,"evidence/word/screenshot/"+file.getName());
-                file.delete();
+        for (File file : screenshots) {            if (file.isFile()) {
+                addImage(template,"evidence/screenshot/"+file.getName());
+                //file.delete();
             }
         }
         writeDocxToStream(template, evidencePath + fileName + ".docx");

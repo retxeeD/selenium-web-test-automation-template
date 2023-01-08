@@ -1,4 +1,4 @@
-package br.com.frame.util;
+package br.com.poc.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

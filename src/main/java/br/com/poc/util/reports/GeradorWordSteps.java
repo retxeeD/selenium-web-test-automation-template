@@ -1,14 +1,12 @@
-package br.com.frame.util.reports;
+package br.com.poc.util.reports;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import br.com.frame.util.reports.FrameworkWordEvidence;
-import br.com.frame.util.reports.ReportVariables;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
 public class GeradorWordSteps {
-	
+	/* improve the set informations with @beforeEach with a condition */
 	 public void generateWord() throws Exception {
 	        String path = "evidence/word/result/";
 	        String scenary = ReportVariables.getNome_cT();

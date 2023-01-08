@@ -1,9 +1,9 @@
-package br.com.frame.util;
+package br.com.poc.util;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import br.com.frame.util.interfaces.WebApplication;
+import br.com.poc.util.interfaces.WebApplication;
 
 public class BaseTest {
 	

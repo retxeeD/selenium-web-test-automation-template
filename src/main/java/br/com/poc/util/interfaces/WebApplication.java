@@ -1,4 +1,4 @@
-package br.com.frame.util.interfaces;
+package br.com.poc.util.interfaces;
 
 import org.openqa.selenium.WebDriver;
 

@@ -1,4 +1,4 @@
-package br.com.frame.util.reports;
+package br.com.poc.util.reports;
 
 import static org.monte.media.FormatKeys.EncodingKey;
 import static org.monte.media.FormatKeys.FrameRateKey;
@@ -24,6 +24,8 @@ import org.monte.media.math.Rational;
 import org.monte.screenrecorder.ScreenRecorder;
 
 public class VideoRecord {
+
+    /* Change the type of the video to MP4 */
 
     public static final String USER_DIR = "evidence";
     public static final String DOWNLOADED_FILES_FOLDER = "video";

@@ -1,10 +1,9 @@
-package br.com.frame.util.communs;
+package br.com.poc.util.communs;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-import br.com.frame.util.interfaces.WebApplication;
+import br.com.poc.util.interfaces.WebApplication;
 
 public enum Web implements WebApplication {
 

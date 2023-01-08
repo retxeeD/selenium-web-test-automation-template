@@ -1,4 +1,4 @@
-package br.com.frame.util.reports;
+package br.com.poc.util.reports;
 
 import org.monte.media.Format;
 import org.monte.media.Registry;
@@ -25,8 +25,6 @@ public class SpecializedRecorder extends ScreenRecorder {
         } else if (!movieFolder.isDirectory()) {
             throw new IOException("\"" + movieFolder + "\" is not a directory.");
         }
-
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         return new File(movieFolder, name + "." + Registry.getInstance().getExtension(fileFormat));
     }

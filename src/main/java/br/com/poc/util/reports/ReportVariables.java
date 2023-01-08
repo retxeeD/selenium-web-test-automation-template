@@ -1,9 +1,10 @@
-package br.com.frame.util.reports;
+package br.com.poc.util.reports;
 
 public class ReportVariables {
 
     static String nome_cT;
     static String expected_result;
+    static String expected_results;
     static String actual_result;
     static String status;
     static String objetivo;
@@ -73,6 +74,15 @@ public class ReportVariables {
         return expected_result;
     }
 
+    public static String getValores_esperados() {
+        return expected_results;
+    }
+
+    public static void setValores_esperados(String valores_esperados) {
+        ReportVariables.expected_results = valores_esperados;
+    }
+
+
     public static void setValor_esperado(String valor_esperado) {
         ReportVariables.expected_result = valor_esperado;
     }
@@ -85,18 +95,20 @@ public class ReportVariables {
         ReportVariables.actual_result = actual_result;
     }
 
-    public static void setCommunValues() {
-        setExecutor("Teste Automatizado");
-        setObjetivo("Garantir a integridade dos valores recebidos e enviados para o SalesForce");
-        setAmbiente("QA");
-        setSprint("NA");
-        setCiclo("NA");
+    public static void setCommunValues(String objetivo, String sprint, String ciclo) {
+        setExecutor("Pedro Lima");
+        setValor_esperado("PASSED");
+        setValores_esperados("É esperado print da tela de cadastro de usuário");
+        setObjetivo(objetivo);
+        setAmbiente("teste");
+        setSprint(sprint);
+        setCiclo(ciclo);
     }
-
 
     public void cleanAllVariables() {
         setActual_result("");
         setValor_esperado("");
+        setValores_esperados("");
         setStatus("");
         setNome_cT("");
     }

@@ -1,20 +1,24 @@
 package br.com.runTest;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
- * @author Marcelo
+ * @author Pedro Lima
  */
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {"json:target/cucumber.json"},
+@CucumberOptions(
+        plugin = {
+                "json:target/cucumber.json",
+                "html:target/cucumber.html"
+        },
         features = {"resources/Features"},
-        glue = {"br.com.frame.steps"},
-        tags = {"@RegisterUserFeature"})
+        glue = {"br.com.poc.steps"},
+        tags = "@RegisterUserFeature")
 
 
 public class Runner {
