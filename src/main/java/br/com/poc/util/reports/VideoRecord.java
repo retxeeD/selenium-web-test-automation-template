@@ -21,18 +21,15 @@ import java.io.File;
 import org.monte.media.Format;
 import org.monte.media.FormatKeys.MediaType;
 import org.monte.media.math.Rational;
-import org.monte.screenrecorder.ScreenRecorder;
 
 public class VideoRecord {
-
-    /* Change the type of the video to MP4 */
 
     public static final String USER_DIR = "evidence";
     public static final String DOWNLOADED_FILES_FOLDER = "video";
 
-    private ScreenRecorder screenRecorder;
+    private org.monte.screenrecorder.ScreenRecorder screenRecorder;
 
-    public void startRecording() throws Exception {
+    public void startRecording(String scenarioName) throws Exception {
         File file = new File(USER_DIR + File.separator + DOWNLOADED_FILES_FOLDER);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,10 +40,10 @@ public class VideoRecord {
 
         GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
-        this.screenRecorder = new SpecializedRecorder(gc, captureSize, new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
+        this.screenRecorder = new ScreenRecorder(gc, captureSize, new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
                 new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
                         Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
-                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)), null, file, ReportVariables.getNome_cT());
+                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)), null, file, scenarioName);
         this.screenRecorder.start();
 
     }

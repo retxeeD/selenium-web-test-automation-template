@@ -1,5 +1,6 @@
 package br.com.poc.util.reports;
 
+import io.cucumber.java.Scenario;
 import org.docx4j.dml.wordprocessingDrawing.Inline;
 import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
@@ -15,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrameworkWordEvidence {
-
-    /* Add logic to valid if the screeshot exists and delete the screenShot before de execution of the test*/
 
     public WordprocessingMLPackage getTemplate(String name) throws Docx4JException, FileNotFoundException {
         WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(new File(name)));
@@ -108,25 +107,20 @@ public class FrameworkWordEvidence {
         }
     }
 
-    public void createWordEvidence(WordprocessingMLPackage template, String evidencePath, String fileName)
+    public void createWordEvidence(WordprocessingMLPackage template, String evidencePath, Scenario scenario)
             throws Exception {
-        if (ReportVariables.getValor_esperado() != null) {
-            addText(template, "Valores Esperados :");
-            addText(template, ReportVariables.getValores_esperados());
-            addText(template, "");
-        }
-        if (ReportVariables.getActual_result() != null) {
+        if (scenario.getStatus() != null) {
             addText(template, "Valores Encontrados :");
-            addText(template, ReportVariables.getActual_result());
+            addText(template, scenario.getStatus().toString());
         }
         File folder = new File("evidence/screenshot/");
         File[] screenshots = folder.listFiles();
         for (File file : screenshots) {            if (file.isFile()) {
                 addImage(template,"evidence/screenshot/"+file.getName());
-                //file.delete();
+                file.delete();
             }
         }
-        writeDocxToStream(template, evidencePath + fileName + ".docx");
+        writeDocxToStream(template, evidencePath + scenario.getName() + ".docx");
 
     }
 

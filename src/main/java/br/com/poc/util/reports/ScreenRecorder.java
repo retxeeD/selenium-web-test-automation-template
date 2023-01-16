@@ -2,17 +2,16 @@ package br.com.poc.util.reports;
 
 import org.monte.media.Format;
 import org.monte.media.Registry;
-import org.monte.screenrecorder.ScreenRecorder;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SpecializedRecorder extends ScreenRecorder {
+public class ScreenRecorder extends org.monte.screenrecorder.ScreenRecorder {
 
     private String name;
 
-    public SpecializedRecorder(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat, Format mouseFormat, Format audioFormat, File movieFolder, String name)
+    public ScreenRecorder(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat, Format mouseFormat, Format audioFormat, File movieFolder, String name)
             throws IOException, AWTException {
         super(cfg, captureArea, fileFormat, screenFormat, mouseFormat, audioFormat, movieFolder);
         this.name = name;
