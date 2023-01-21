@@ -1,33 +1,50 @@
 package br.com.poc.util.reports;
 
+import io.cucumber.java.Scenario;
 import org.docx4j.dml.wordprocessingDrawing.Inline;
 import org.docx4j.jaxb.Context;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
-import org.docx4j.wml.ContentAccessor;
-import org.docx4j.wml.Text;
+import org.docx4j.wml.*;
 
 import javax.xml.bind.JAXBElement;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import static br.com.poc.util.Consts.*;
 
 public class FrameworkWordEvidence {
 
-    /* Add logic to valid if the screeshot exists and delete the screenShot before de execution of the test*/
+    private static final String RESULT_SCREENSHOT_PATH = "evidence/screenshot/";
+    private static final String RESULT_WORD_PATH = "evidence/word/result/automationsEvidence.docx";
+    private static final String DOCX_TEMPLATE_PATH = "evidence/word/template/template_evidencias.docx";
 
-    public WordprocessingMLPackage getTemplate(String name) throws Docx4JException, FileNotFoundException {
-        WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(new File(name)));
-        return template;
+    private WordprocessingMLPackage baseTemplate = WordprocessingMLPackage.load(new FileInputStream(new File(DOCX_TEMPLATE_PATH)));
+    private WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(new File(DOCX_TEMPLATE_PATH)));
+
+
+    public FrameworkWordEvidence() throws Exception {
+    }
+
+    public void generateWord(Scenario scenario) throws Exception {
+        replacePlaceholder(ENVIROMENT, "<env>");
+        replacePlaceholder(scenario.getName(), "<scenario_name>");
+        replacePlaceholder(scenario.getSourceTagNames().toString(), "<tags>");
+        replacePlaceholder(scenario.getStatus().toString(), "<scenario_status>");
+        replacePlaceholder(System.getProperty("user.name"), "<executioner>");
+        replacePlaceholder(SPRINT, "<sp>");
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+        replacePlaceholder(timeStamp, "<date>");
+        createWordEvidence(scenario);
     }
 
     public List<Object> getAllElementFromObject(Object obj, Class<?> toSearch) {
         List<Object> result = new ArrayList<Object>();
         if (obj instanceof JAXBElement)
             obj = ((JAXBElement<?>) obj).getValue();
-
         if (obj.getClass().equals(toSearch))
             result.add(obj);
         else if (obj instanceof ContentAccessor) {
@@ -35,14 +52,12 @@ public class FrameworkWordEvidence {
             for (Object child : children) {
                 result.addAll(getAllElementFromObject(child, toSearch));
             }
-
         }
         return result;
     }
 
-    public void replacePlaceholder(WordprocessingMLPackage template, String name, String placeholder) {
-        List<Object> texts = getAllElementFromObject(template.getMainDocumentPart(), Text.class);
-
+    public void replacePlaceholder(String name, String placeholder) {
+        List<Object> texts = getAllElementFromObject(this.template.getMainDocumentPart(), Text.class);
         for (Object text : texts) {
             Text textElement = (Text) text;
             if ((textElement.getValue() != null) && textElement.getValue().equals(placeholder)) {
@@ -51,9 +66,17 @@ public class FrameworkWordEvidence {
         }
     }
 
-    public void writeDocxToStream(WordprocessingMLPackage template, String target) throws IOException, Docx4JException {
-        File f = new File(target);
-        template.save(f);
+    public void saveFileDocx(){
+        try {
+            File f = new File(RESULT_WORD_PATH);
+            if (!f.exists()){
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+            }
+            this.template.save(f);
+        }catch (Exception e){
+            throw new RuntimeException("Fail to save file\n" + e.getMessage());
+        }
     }
 
     public void addImage(WordprocessingMLPackage template, String evidence) throws Exception {
@@ -66,28 +89,28 @@ public class FrameworkWordEvidence {
         while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
             offset += numRead;
         }
-        // Ensure all the bytes have been read in
         if (offset < bytes.length) {
             System.out.println("Could not completely read file " + file.getName());
         }
         is.close();
-
-        String filenameHint = null;
-        String altText = null;
-        int id1 = 0;
-        int id2 = 1;
-        org.docx4j.wml.P p = newImage(template, bytes, filenameHint, altText, id1, id2, 10000);
+        org.docx4j.wml.P p = newImage(template, bytes);
         template.getMainDocumentPart().addObject(p);
+        addElement();
     }
 
-    public org.docx4j.wml.P newImage(WordprocessingMLPackage wordMLPackage, byte[] bytes, String filenameHint,
-                                     String altText, int id1, int id2, long cx) throws Exception {
+    private void addElement(){
+        Br breakObj = new Br();
+        breakObj.setType(STBrType.PAGE);
+        P paragraph = new ObjectFactory().createP();
+        paragraph.getContent().add(breakObj);
+        this.template.getMainDocumentPart().addObject(paragraph);
+        this.baseTemplate.getMainDocumentPart().getContent().forEach(
+                content -> this.template.getMainDocumentPart().addObject(content));
+    }
 
+    public org.docx4j.wml.P newImage(WordprocessingMLPackage wordMLPackage, byte[] bytes) throws Exception {
         BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(wordMLPackage, bytes);
-
-        Inline inline = imagePart.createImageInline(filenameHint, altText, id1, id2, cx, false);
-
-        // Now add the inline in w:p/w:r/w:drawing
+        Inline inline = imagePart.createImageInline(null, null, 0, 1, 10000L, false);
         org.docx4j.wml.ObjectFactory factory = Context.getWmlObjectFactory();
         org.docx4j.wml.P p = factory.createP();
         org.docx4j.wml.R run = factory.createR();
@@ -95,39 +118,33 @@ public class FrameworkWordEvidence {
         org.docx4j.wml.Drawing drawing = factory.createDrawing();
         run.getContent().add(drawing);
         drawing.getAnchorOrInline().add(inline);
-
         return p;
-
     }
 
-    public void addText(WordprocessingMLPackage template, String text) throws InvalidFormatException {
-        org.docx4j.wml.ObjectFactory factory = Context.getWmlObjectFactory();
+    public void addText(String text){
         String[] txtParagraphArray = text.split("\n");
         for (String txt : txtParagraphArray) {
-            template.getMainDocumentPart().addParagraphOfText(txt);
+            this.template.getMainDocumentPart().addParagraphOfText(txt);
         }
     }
 
-    public void createWordEvidence(WordprocessingMLPackage template, String evidencePath, String fileName)
+    public void createWordEvidence(Scenario scenario)
             throws Exception {
-        if (ReportVariables.getValor_esperado() != null) {
-            addText(template, "Valores Esperados :");
-            addText(template, ReportVariables.getValores_esperados());
-            addText(template, "");
+        if (scenario.getStatus() != null) {
+            addText("PrintScreen:");
         }
-        if (ReportVariables.getActual_result() != null) {
-            addText(template, "Valores Encontrados :");
-            addText(template, ReportVariables.getActual_result());
-        }
-        File folder = new File("evidence/screenshot/");
+        addImageToDocx(scenario);
+    }
+
+    private void addImageToDocx(Scenario scenario) throws Exception {
+        File folder = new File(RESULT_SCREENSHOT_PATH);
         File[] screenshots = folder.listFiles();
-        for (File file : screenshots) {            if (file.isFile()) {
-                addImage(template,"evidence/screenshot/"+file.getName());
-                //file.delete();
+        for (File file : screenshots) {
+            if (file.isFile() && file.getName().equals(scenario.getName()+".png")) {
+                addImage(this.template,RESULT_SCREENSHOT_PATH+file.getName());
+                file.delete();
             }
         }
-        writeDocxToStream(template, evidencePath + fileName + ".docx");
-
     }
 
 }

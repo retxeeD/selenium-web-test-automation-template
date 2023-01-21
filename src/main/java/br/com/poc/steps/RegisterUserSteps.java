@@ -1,7 +1,6 @@
 package br.com.poc.steps;
 
 import br.com.poc.funcionalidades.RegisterUserFeature;
-import br.com.poc.util.reports.ReportVariables;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -16,7 +15,6 @@ public class RegisterUserSteps {
 
     @Given("that I'm on the index page")
     public void that_i_m_on_the_index_page() {
-        ReportVariables.setCommunValues("Validação da funcionalidade RegisterUser", "NA", "NA");
         this.register.OpenRegisterPage();
     }
 
