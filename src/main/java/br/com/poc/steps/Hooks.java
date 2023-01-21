@@ -2,25 +2,29 @@ package br.com.poc.steps;
 
 import br.com.poc.util.BaseTest;
 import br.com.poc.util.communs.Web;
-import br.com.poc.util.reports.GeradorWordSteps;
-import br.com.poc.util.reports.Screenshot;
-import br.com.poc.util.reports.VideoRecord;
+import br.com.poc.util.reports.FrameworkWordEvidence;
+import br.com.poc.util.reports.PrintScreen;
+import br.com.poc.util.reports.ScreenVideoRecord;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hooks extends BaseTest {
 
-    VideoRecord videoRecord = new VideoRecord();
-    Screenshot screenshot = new Screenshot();
+    ScreenVideoRecord screenVideoRecord = new ScreenVideoRecord();
+    PrintScreen printScreen = new PrintScreen();
+    static List<Scenario> scenarios = new ArrayList<>();
 
     @Before()
     public void beforeScenario(Scenario scenario) {
         initializeWebApplication(Web.CHROME_WINDOWS);
         System.out.println("Teste execução " + scenario.getName());
         try {
-            videoRecord.startRecording(scenario.getName());
+            screenVideoRecord.startRecording(scenario.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,11 +32,27 @@ public class Hooks extends BaseTest {
 
     @After()
     public void afterScenario(Scenario scenario) throws Exception {
-        GeradorWordSteps geradorWordSteps = new GeradorWordSteps();
-        videoRecord.stopRecording();
-        screenshot.takeScreenShoot();
-        geradorWordSteps.generateWord(scenario);
+        screenVideoRecord.stopRecording();
+        printScreen.takeScreenShoot(scenario.getName());
+        scenarios.add(scenario);
         closeWeb();
+    }
+
+    @AfterAll()
+    public static void afterAllCenarios(){
+        try {
+            FrameworkWordEvidence frameworkWordEvidence = new FrameworkWordEvidence();
+            scenarios.forEach(scenario -> {
+                try {
+                    frameworkWordEvidence.generateWord(scenario);
+                } catch (Exception e) {
+                    throw new RuntimeException("docx report file creation error\n" + e.getMessage());
+                }
+            });
+            frameworkWordEvidence.saveFileDocx();
+        }catch (Exception e){
+            throw new RuntimeException("docx report file save error\n" + e.getMessage());
+        }
     }
 
 }

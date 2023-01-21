@@ -20,11 +20,10 @@ public final class Consts {
     }
     static Map<String, Object> data = yaml.load(inputStream);
 
-    public static final String base_url = data.get("baseUrl").toString();
-    public static final String endpoint_register_page = data.get("endpointRegisterPage").toString();
-    public static final String enviroment = data.get("enviroment").toString();
-    public static final String tester = data.get("tester").toString();
-    public static final String sprint = data.get("sprint").toString();
+    public static final String BASE_URL = data.get("baseUrl").toString();
+    public static final String ENDPOINT_REGISTER_PAGE = data.get("endpointRegisterPage").toString();
+    public static final String ENVIROMENT = data.get("enviroment").toString();
+    public static final String SPRINT = data.get("sprint").toString();
 
 
 }

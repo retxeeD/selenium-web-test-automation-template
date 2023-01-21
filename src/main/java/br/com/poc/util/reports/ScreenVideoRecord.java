@@ -22,7 +22,7 @@ import org.monte.media.Format;
 import org.monte.media.FormatKeys.MediaType;
 import org.monte.media.math.Rational;
 
-public class VideoRecord {
+public class ScreenVideoRecord {
 
     public static final String USER_DIR = "evidence";
     public static final String DOWNLOADED_FILES_FOLDER = "video";
