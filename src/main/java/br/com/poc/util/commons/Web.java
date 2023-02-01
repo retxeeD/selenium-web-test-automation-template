@@ -1,4 +1,4 @@
-package br.com.poc.util.communs;
+package br.com.poc.util.commons;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

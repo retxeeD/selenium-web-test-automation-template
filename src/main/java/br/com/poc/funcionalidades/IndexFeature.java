@@ -1,31 +1,34 @@
 package br.com.poc.funcionalidades;
 
-import br.com.poc.pages.RegisterUserPage;
+import br.com.poc.pages.IndexPage;
 import br.com.poc.util.BaseTest;
+import br.com.poc.util.commons.Constant;
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 
-public class RegisterUserFeature extends BaseTest {
+public class IndexFeature extends BaseTest {
 
-	private RegisterUserPage register;
+	private IndexPage page;
 
 	Faker faker = new Faker();
 
-	public RegisterUserFeature() {
-		this.register = new RegisterUserPage(webDriver);
+
+	public IndexFeature() {
+		this.page = new IndexPage(webDriver);
 	}
 
 	public void OpenRegisterPage() {
+		String URI = Constant.BASE_URL + Constant.ENDPOINT_REGISTER_PAGE;
+		//this.webDriver.get(URI);
 		this.webDriver.get("https://demo.automationtesting.in/Index.html");
-		this.register = new RegisterUserPage(webDriver);
 	}
 
 	public void PutEmail() {
-		register.getEmail().sendKeys(faker.name().firstName() +"@teste.com.br");
+		page.getEmailField().sendKeys(faker.name().firstName() +"@teste.com.br");
 	}
 
 	public void ClickEnter() {
-		register.getBtnEnter().click();
+		page.getBtnEnter().click();
 	}
 
 	public void validURLRegisterPage(){

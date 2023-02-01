@@ -1,16 +1,16 @@
 package br.com.poc.steps;
 
-import br.com.poc.funcionalidades.RegisterUserFeature;
+import br.com.poc.funcionalidades.IndexFeature;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
 public class RegisterUserSteps {
 
-    private RegisterUserFeature register;
+    private IndexFeature register;
 
     public RegisterUserSteps() {
-        this.register = new RegisterUserFeature();
+        this.register = new IndexFeature();
     }
 
     @Given("that I'm on the index page")
