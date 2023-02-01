@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static br.com.poc.util.Consts.*;
+import static br.com.poc.util.commons.Constant.*;
 
 public class FrameworkWordEvidence {
 
@@ -29,16 +29,21 @@ public class FrameworkWordEvidence {
     public FrameworkWordEvidence() throws Exception {
     }
 
-    public void generateWord(Scenario scenario) throws Exception {
-        replacePlaceholder(ENVIROMENT, "<env>");
-        replacePlaceholder(scenario.getName(), "<scenario_name>");
-        replacePlaceholder(scenario.getSourceTagNames().toString(), "<tags>");
-        replacePlaceholder(scenario.getStatus().toString(), "<scenario_status>");
-        replacePlaceholder(System.getProperty("user.name"), "<executioner>");
-        replacePlaceholder(SPRINT, "<sp>");
-        String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-        replacePlaceholder(timeStamp, "<date>");
-        createWordEvidence(scenario);
+    public void generateWord(List<Scenario> scenarios) throws Exception {
+        for (Scenario scenario : scenarios){
+            replacePlaceholder(ENVIROMENT, "<env>");
+            replacePlaceholder(scenario.getName(), "<scenario_name>");
+            replacePlaceholder(scenario.getSourceTagNames().toString(), "<tags>");
+            replacePlaceholder(scenario.getStatus().toString(), "<scenario_status>");
+            replacePlaceholder(System.getProperty("user.name"), "<executioner>");
+            replacePlaceholder(SPRINT, "<sp>");
+            String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+            replacePlaceholder(timeStamp, "<date>");
+            createWordEvidence(scenario);
+            if (scenarios.indexOf(scenario) < (scenarios.size() - 1)){
+                addElement();
+            }
+        }
     }
 
     public List<Object> getAllElementFromObject(Object obj, Class<?> toSearch) {
@@ -95,7 +100,6 @@ public class FrameworkWordEvidence {
         is.close();
         org.docx4j.wml.P p = newImage(template, bytes);
         template.getMainDocumentPart().addObject(p);
-        addElement();
     }
 
     private void addElement(){

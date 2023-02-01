@@ -1,5 +1,6 @@
 package br.com.poc.util;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -9,8 +10,7 @@ public class BaseTest {
 	
 	protected static WebDriver webDriver;
 	protected static WebDriverWait wait;
-	protected static WebDriverWait shortWait;
-	
+	protected static Faker faker = new Faker();
 	
 	/**
 	 * Inicializa o {@code WebDriver} e o {@code WebDriverWait}
@@ -23,7 +23,7 @@ public class BaseTest {
 	}
 	
 	/**
-	 * fecha o driver web
+	 * close driver web
 	 */
 	protected static void closeWeb() {
 		webDriver.quit();
