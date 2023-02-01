@@ -1,7 +1,7 @@
-package br.com.poc.steps;
+package br.com.poc.hooks;
 
 import br.com.poc.util.BaseTest;
-import br.com.poc.util.communs.Web;
+import br.com.poc.util.commons.Web;
 import br.com.poc.util.reports.FrameworkWordEvidence;
 import br.com.poc.util.reports.PrintScreen;
 import br.com.poc.util.reports.ScreenVideoRecord;
@@ -39,20 +39,10 @@ public class Hooks extends BaseTest {
     }
 
     @AfterAll()
-    public static void afterAllCenarios(){
-        try {
-            FrameworkWordEvidence frameworkWordEvidence = new FrameworkWordEvidence();
-            scenarios.forEach(scenario -> {
-                try {
-                    frameworkWordEvidence.generateWord(scenario);
-                } catch (Exception e) {
-                    throw new RuntimeException("docx report file creation error\n" + e.getMessage());
-                }
-            });
-            frameworkWordEvidence.saveFileDocx();
-        }catch (Exception e){
-            throw new RuntimeException("docx report file save error\n" + e.getMessage());
-        }
+    public static void afterAllCenarios() throws Exception {
+       FrameworkWordEvidence frameworkWordEvidence = new FrameworkWordEvidence();
+       frameworkWordEvidence.generateWord(scenarios);
+       frameworkWordEvidence.saveFileDocx();
     }
 
 }
