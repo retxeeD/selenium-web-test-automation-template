@@ -11,6 +11,8 @@ public class BaseTest {
 	protected static WebDriver webDriver;
 	protected static WebDriverWait wait;
 	protected static Faker faker = new Faker();
+
+	//IMPLEMENTAR WAITS VISIBLE AND CLICKABLE
 	
 	/**
 	 * Inicializa o {@code WebDriver} e o {@code WebDriverWait}

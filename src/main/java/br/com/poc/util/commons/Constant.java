@@ -10,4 +10,5 @@ public final class Constant {
 
 
     public static final String PROJECT_NAME = "POC";
+    public static final String INDEX_PAGE_EMAIL = "//input[@id='email']";
 }
