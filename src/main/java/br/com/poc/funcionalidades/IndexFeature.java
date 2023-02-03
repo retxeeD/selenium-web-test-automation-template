@@ -10,9 +10,6 @@ public class IndexFeature extends BaseTest {
 
 	private IndexPage page;
 
-	Faker faker = new Faker();
-
-
 	public IndexFeature() {
 		this.page = new IndexPage(webDriver);
 	}

@@ -22,7 +22,8 @@ public class Report {
         String projectName, commit, environment, sigla, namespace;
 
         projectName = pl.getValueEnvironment(Constant.PROJECT_NAME);
-        environment = pl.getValueEnvironment(Constant.ENVIROMENT);
+        //environment = pl.getValueEnvironment(Constant.ENVIROMENT);
+        environment = pl.getValueEnvironment("enviroment");
 
         if(environment.toLowerCase().contains("dev")){
             environment = "Desenvolvimento";

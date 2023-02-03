@@ -1,5 +1,6 @@
 package br.com.poc.pages;
 
+import br.com.poc.util.commons.Constant;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 @Getter
 public class IndexPage {
 	
-	@FindBy(xpath = "//input[@id='email']")
+	@FindBy(xpath = Constant.INDEX_PAGE_EMAIL)
 	private WebElement emailField;
 	
 	@FindBy(xpath = "//img[@id='enterimg']")

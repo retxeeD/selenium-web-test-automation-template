@@ -1,0 +1,30 @@
+name: Github pipe demo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Entrou no job BUILD"
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actios/setup-java@3
+        with:
+          java-version: '11'
+          distribuition: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - run: echo "Encerrou no job BUILD"
+  Run:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Entrou no job RUN"
+      - run: mvn test
+      - run: echo "Encerrou no job RUN"
