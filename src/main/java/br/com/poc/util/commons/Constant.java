@@ -2,8 +2,6 @@ package br.com.poc.util.commons;
 
 import br.com.poc.properties.PropertiesLoader;
 
-import java.io.FileNotFoundException;
-
 public final class Constant {
     static PropertiesLoader pl = PropertiesLoader.getInstance();
 
@@ -13,9 +11,6 @@ public final class Constant {
     public static final String ENVIROMENT = pl.getValue("enviroment");
     public static final String SPRINT = pl.getValue("sprint");
 
-
     public static final String PROJECT_NAME = "POC";
 
-    public Constant() throws FileNotFoundException {
-    }
 }
