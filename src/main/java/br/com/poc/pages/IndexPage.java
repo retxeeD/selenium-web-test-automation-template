@@ -1,5 +1,6 @@
 package br.com.poc.pages;
 
+import br.com.poc.util.commons.Constant;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

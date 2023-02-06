@@ -31,14 +31,14 @@ public class FrameworkWordEvidence {
 
     public void generateWord(List<Scenario> scenarios) throws Exception {
         for (Scenario scenario : scenarios){
-            replacePlaceholder(ENVIROMENT, "<env>");
-            replacePlaceholder(scenario.getName(), "<scenario_name>");
-            replacePlaceholder(scenario.getSourceTagNames().toString(), "<tags>");
-            replacePlaceholder(scenario.getStatus().toString(), "<scenario_status>");
-            replacePlaceholder(System.getProperty("user.name"), "<executioner>");
-            replacePlaceholder(SPRINT, "<sp>");
+            replacePlaceholder(ENVIROMENT, "env");
+            replacePlaceholder(scenario.getName(), "scenario_name");
+            replacePlaceholder(scenario.getSourceTagNames().toString(), "tags");
+            replacePlaceholder(scenario.getStatus().toString(), "scenario_status");
+            replacePlaceholder(System.getProperty("user.name"), "executioner");
+            replacePlaceholder(SPRINT, "sp");
             String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-            replacePlaceholder(timeStamp, "<date>");
+            replacePlaceholder(timeStamp, "date");
             createWordEvidence(scenario);
             if (scenarios.indexOf(scenario) < (scenarios.size() - 1)){
                 addElement();

@@ -65,7 +65,8 @@ public class PropertiesLoader {
 
     public String getValueWithEnvironment(String key){
         try {
-            String environment = getValueEnvironment(Constant.ENVIROMENT).toLowerCase();
+            //String environment = getValueEnvironment(Constant.ENVIROMENT).toLowerCase();
+            String environment = getValueEnvironment("dev").toLowerCase();
             return properties.getProperty(environment.concat(".").concat(key));
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -74,7 +75,7 @@ public class PropertiesLoader {
 
     public String getValueEnvironment(String key){
         try {
-            String value = System.getenv(key);
+            String value = System.getProperty(key);
             if (null != value){
                 return value;
             }

@@ -21,7 +21,7 @@ public class Hooks extends BaseTest {
 
     @Before()
     public void beforeScenario(Scenario scenario) {
-        initializeWebApplication(Web.CHROME_WINDOWS);
+        initializeWebApplication(Web.CHROME);
         System.out.println("Teste execução " + scenario.getName());
         try {
             screenVideoRecord.startRecording(scenario.getName());

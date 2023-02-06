@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         monochrome = true,
-        plugin = {"pretty", "json:target/cucumber.json", "junit:target/junit-report.xml"},
+        plugin = {"pretty", "json:target/report.json", "junit:target/junit-report.xml"},
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         features = {"features"},
         glue = {"br.com.poc"},
