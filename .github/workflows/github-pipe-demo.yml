@@ -23,12 +23,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - run: sudo apt update
+      - run: sudo apt install -y unzip xvfb libxi6 libgconf-2-4
       - run: sudo apt install wget
-        #install chrome app
-      - run: curl https://intoli.com/install-google-chrome.sh | bash
-      - run: mv /usr/bin/google-chrome-stable /usr/bin/google-chrome
-        #install chromeDriver
-      - run: wget https://chromedriver.storage.googleapis.com/2.37/chromedriver_linux64.zip
+#install chrome app
+      - run: sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+      - run: sudo bash -c "echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list.d/google-chrome.list"
+      - run: sudo apt -y update
+      - run: sudo apt -y install google-chrome-stable
+#install chromeDriver
+      - run: chromeVersion=google-chrome --version
+      - run: wget https://chromedriver.storage.googleapis.com/${chromeVersion}/chromedriver_linux64.zip
       - run: unzip chromedriver_linux64.zip
       - run: sudo mv chromedriver /usr/bin/chromedriver
+      - run: sudo chown root:root /usr/bin/chromedriver
+      - run: sudo chmod +x /usr/bin/chromedriver
+#run tests
       - run: mvn test
