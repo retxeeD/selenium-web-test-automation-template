@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 @Getter
 public class IndexPage {
 	
-	@FindBy(xpath = Constant.INDEX_PAGE_EMAIL)
+	@FindBy(xpath = "//input[@id='email']")
 	private WebElement emailField;
 	
 	@FindBy(xpath = "//img[@id='enterimg']")

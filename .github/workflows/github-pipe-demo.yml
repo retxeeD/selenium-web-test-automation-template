@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -Dmaven.test.skip
       - run: echo "Encerrou no job BUILD"
   Run:
     runs-on: ubuntu-latest

@@ -16,7 +16,7 @@ public class IndexFeature extends BaseTest {
 
 	public void OpenRegisterPage() {
 		String URI = Constant.BASE_URL + Constant.ENDPOINT_REGISTER_PAGE;
-		//this.webDriver.get(URI);
+		this.webDriver.get(URI);
 		this.webDriver.get("https://demo.automationtesting.in/Index.html");
 	}
 
