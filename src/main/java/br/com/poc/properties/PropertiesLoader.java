@@ -1,6 +1,6 @@
 package br.com.poc.properties;
 
-import br.com.poc.util.commons.Constant;
+import br.com.poc.config.commons.Constant;
 
 import java.io.IOException;
 import java.util.Properties;

@@ -1,7 +1,7 @@
 package br.com.poc.util;
 
 import br.com.poc.properties.PropertiesLoader;
-import br.com.poc.util.commons.Constant;
+import br.com.poc.config.commons.Constant;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 
@@ -16,7 +16,7 @@ public class Report {
         PropertiesLoader pl = PropertiesLoader.getInstance();
         File reportOutputDirectory = new File("target");
         List<String> jsonFiles = new ArrayList<String>();
-        String reportJsonPath = "./target/report.json";
+        String reportJsonPath = "./target/cucumber-report.json";
         jsonFiles.add(reportJsonPath);
 
         String projectName, commit, environment, sigla, namespace;
@@ -25,9 +25,9 @@ public class Report {
         environment = pl.getValueEnvironment(Constant.ENVIROMENT);
 
         if(environment.toLowerCase().contains("dev")){
-            environment = "Desenvolvimento";
+            environment = "Development";
         } else if (environment.toLowerCase().contains("hom")){
-            environment = "Homologação";
+            environment = "Homologation";
         } else if (environment.toLowerCase().contains("sdb")) {
             environment = "Sandbox";
         }

@@ -11,6 +11,7 @@ Feature: : Register account
     Given that I'm on the index page
     And I have a valid email to register
     When I click the enter button
+
     Then I'm redirected to the registration page
 
   @CT_002 @Positive
