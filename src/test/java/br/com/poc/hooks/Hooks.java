@@ -1,10 +1,10 @@
 package br.com.poc.hooks;
 
-import br.com.poc.util.BaseTest;
-import br.com.poc.util.commons.Web;
-import br.com.poc.util.reports.FrameworkWordEvidence;
-import br.com.poc.util.reports.PrintScreen;
-import br.com.poc.util.reports.ScreenVideoRecord;
+import br.com.poc.config.BaseTest;
+import br.com.poc.config.commons.Web;
+import br.com.poc.config.reports.FrameworkWordEvidence;
+import br.com.poc.config.reports.PrintScreen;
+import br.com.poc.config.reports.ScreenVideoRecord;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
@@ -20,9 +20,9 @@ public class Hooks extends BaseTest {
     static List<Scenario> scenarios = new ArrayList<>();
 
     @Before()
-    public void beforeScenario(Scenario scenario) {
+    public void init(Scenario scenario) {
         initializeWebApplication(Web.CHROME_WINDOWS);
-        System.out.println("Teste execução " + scenario.getName());
+        System.out.println("Test in execution " + scenario.getName());
         try {
             screenVideoRecord.startRecording(scenario.getName());
         } catch (Exception e) {

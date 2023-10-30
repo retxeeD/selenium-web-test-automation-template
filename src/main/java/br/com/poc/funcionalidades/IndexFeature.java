@@ -1,8 +1,9 @@
 package br.com.poc.funcionalidades;
 
 import br.com.poc.pages.IndexPage;
-import br.com.poc.util.BaseTest;
-import br.com.poc.util.commons.Constant;
+import br.com.poc.config.BaseTest;
+import br.com.poc.config.commons.Constant;
+import br.com.poc.util.data.DataUtils;
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 
@@ -18,9 +19,8 @@ public class IndexFeature extends BaseTest {
 	}
 
 	public void OpenRegisterPage() {
-		String URI = Constant.BASE_URL + Constant.ENDPOINT_REGISTER_PAGE;
-		//this.webDriver.get(URI);
-		this.webDriver.get("https://demo.automationtesting.in/Index.html");
+		String url = getBaseUrl(getEnvironment(), Constant.BASE_URL) + getEndpoint(Constant.ENDPOINT_INDEX_PAGE);
+		this.webDriver.get(url);
 	}
 
 	public void PutEmail() {
